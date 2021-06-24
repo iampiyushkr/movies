@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #container{
+                width: 400px;
+                margin: auto;
+                background-color: aquamarine;
+                text-align: center;
+            }
+            img{
+                width: 100%px;
+                
+            }
+        </style>
+    </head>
+    <body>
+        Movie_Name:<input type="text" id="movie"/>
+        <button onclick="getMovie()" id="search">Search</button>
+        <hr>
+        <div id="container"></div>
+    </body>
+</html>
+<script>
+
+    async function getMovie(){
+        let movie=document.getElementById('movie').value
+        let res=await fetch(`http://www.omdbapi.com/?t=${movie}&apikey=b66fdf13`)
+        let data=await res.json()
+         console.log(data)
+        showMovie(data)
+    } 
+    
+    function showMovie(d){
+        console.log(d.Title)
+        let title=document.createElement('p')
+        title.innerHTML='Name: '+d.Title
+        let Released = document.createElement('p')
+        Released.innerHTML = 'Released_Date: ' + d.Released
+        let imdbRating = document.createElement('p')
+        imdbRating.innerHTML = 'imdb_Rating: ' + d.imdbRating
+        let Language = document.createElement('p')
+        Language.innerHTML = 'Language: ' + d.Language
+        let img=document.createElement('img')
+        img.src=d.Poster
+
+        document.getElementById('container').append(title,Released,imdbRating,Language,img)
+    }
+
+</script>
